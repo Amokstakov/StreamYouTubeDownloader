@@ -1,14 +1,36 @@
 version: '3'
+
 services:
-  client:
-    build: ./client
-    ports:
-      - "3000:80"
-    #stdin_open: true
-
-
   server:
     build: ./server
     command: gunicorn --bind 0.0.0.0:8080 app:app
+    expose:
+      - 8080 
+
+  client:
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: unless-started
+    volumes:
+      - ./client/data/nginx/:/etc/nginx/conf.d
+      - ./client/data/certbot/conf:/etc/letsencrypt
+      - ./client/data/certbot/www:/var/www/certbot
     ports:
-      - "8080:8080"
+      - "80:80"
+      - "443:443"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    depends_on:
+      - server 
+
+  cerbot:
+    image: cerbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./client/data/certbot/conf:/etc/letsencrypt
+      - ./client/data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+ 
+volumes:
+  static:
