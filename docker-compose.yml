@@ -25,7 +25,7 @@ services:
       - server 
 
   certbot:
-    image: cerbot/certbot
+    image: certbot/certbot
     restart: unless-stopped
     volumes:
       - ./client/data/certbot/conf:/etc/letsencrypt
