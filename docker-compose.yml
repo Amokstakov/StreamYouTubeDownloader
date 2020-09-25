@@ -5,8 +5,7 @@ services:
     build: ./server
     command: gunicorn --bind 0.0.0.0:8080 app:app
     expose:
-      - 8080 
-
+      - 8080
   client:
     container_name: client
     build:
@@ -14,7 +13,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
-      - ./client/data/nginx/:/etc/nginx/conf.d
+      - ./client/data/nginx:/etc/nginx/conf.d
       - ./client/data/certbot/conf:/etc/letsencrypt
       - ./client/data/certbot/www:/var/www/certbot
     ports:
@@ -22,7 +21,7 @@ services:
       - "443:443"
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     depends_on:
-      - server 
+      - server
 
   certbot:
     image: certbot/certbot
@@ -31,6 +30,7 @@ services:
       - ./client/data/certbot/conf:/etc/letsencrypt
       - ./client/data/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
- 
+  
 volumes:
   static:
+
