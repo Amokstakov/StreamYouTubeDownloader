@@ -1,0 +1,13 @@
+-i https://pypi.org/simple
+click==7.1.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+flask-cors==3.0.9
+flask==1.1.2
+git+https://gitlab.com/obuilds/public/pytube@31ff6c57eb5530baeaf87495b2db6f7d7a9ea735#egg=pytube3
+gunicorn==20.0.4
+itsdangerous==1.1.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+jinja2==2.11.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+markupsafe==1.1.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+python-dotenv==0.14.0
+six==1.15.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+typing-extensions==3.7.4.3
+werkzeug==1.0.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
