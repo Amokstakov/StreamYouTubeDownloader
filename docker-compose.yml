@@ -12,7 +12,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
-    restart: unless-started
+    restart: unless-stopped
     volumes:
       - ./client/data/nginx/:/etc/nginx/conf.d
       - ./client/data/certbot/conf:/etc/letsencrypt
