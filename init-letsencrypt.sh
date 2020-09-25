@@ -9,7 +9,7 @@ domains=(nyx.melkey.dev www.nyx.melkey.dev)
 rsa_key_size=4096
 data_path="./client/data/certbot"
 email="" # Adding a valid address is strongly recommended
-staging=1 # Set to 1 if you're testing your setup to avoid hitting request limits
+staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 if [ -d "$data_path" ]; then
   read -p "Existing data found for $domains. Continue and replace existing certificate? (y/N) " decision
@@ -80,3 +80,4 @@ if [ `docker-compose ps | grep client | awk '{print $5}'` = "Up" ]; then
   echo "### Reloading nginx ..."
   docker-compose exec client nginx -s reload
 fi
+
