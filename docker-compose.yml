@@ -24,7 +24,7 @@ services:
     depends_on:
       - server 
 
-  cerbot:
+  certbot:
     image: cerbot/certbot
     restart: unless-stopped
     volumes:
