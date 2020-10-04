@@ -34,6 +34,7 @@ SOFTWARE.
 
 import pytube
 
+
 def apply_patches():
     pytube.extract.apply_descrambler = apply_descrambler
 
