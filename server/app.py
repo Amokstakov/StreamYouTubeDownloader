@@ -6,10 +6,10 @@ import pytube
 
 app = Flask(__name__)
 cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+app.config["CORS_HEADERS"] = "Content-Type"
 
 
-@app.route('/api/converter', methods=['GET', 'POST'])
+@app.route("/api/converter", methods=["GET", "POST"])
 @cross_origin()
 def URL_converter():
 
@@ -19,7 +19,7 @@ def URL_converter():
         video = youtube.streams.first()
 
         title = video.title
-        title = re.sub(r'[^\w]', ' ', title)
+        title = re.sub(r"[^\w]", " ", title)
         title = title.replace(" ", "_")
 
         video.download("./Videos", title)
@@ -30,11 +30,15 @@ def URL_converter():
         return "This is a miss call"
 
 
-@app.route('/api/getFile/<video_title>')
+@app.route("/api/getFile/<video_title>")
 @cross_origin()
 def return_file(video_title):
     try:
-        return send_file(f"./Videos/{video_title}.mp4", attachment_filename=f"{video_title}.mp4", as_attachment=True)
+        return send_file(
+            f"./Videos/{video_title}.mp4",
+            attachment_filename=f"{video_title}.mp4",
+            as_attachment=True,
+        )
 
     except Exception as e:
         return e
