@@ -100,6 +100,12 @@ class Test_Suite:
             self.spinner.fail(text="Could not reach URL -> FAIL\n")
             self.spinner.stop()
             exit(0)
+
+        if os.path.isfile(a):
+            self.spinner.fail(text="File Exists")
+            self.spinner.stop()
+            exit(1)
+
         """for testing purposes we do not care about resolution
             for this case we will use a low-pixel res for effeciency
 
@@ -108,25 +114,19 @@ class Test_Suite:
 
             parse_qs(formats[i]["signatureCipher"]) -> instead of "cipher"
         """
-        if os.path.isfile(a):
-            self.spinner.fail(text='File Exists')
-            self.spinner.stop()
-            exit(1)
 
         try:
             video = _youtube.streams.get_lowest_resolution()
             video.download(output_path=home_dir, filename=_filename)
         except:
-            self.spinner.fail(
-                text="Test Failed because video download -> FAILED\n"
-            )
+            self.spinner.fail(text="Test Failed because video download -> FAILED\n")
             self.spinner.stop()
             exit(0)
         if os.path.isfile(a):
-            self.spinner.succeed(text='Video Download -> PASS')
+            self.spinner.succeed(text="Video Download -> PASS")
             self.spinner.start()
         else:
-            self.spinner.fail(text='Download Failed -> file does not exist\n')
+            self.spinner.fail(text="Download Failed -> file does not exist\n")
             self.spinner.stop()
             exit(1)
 
