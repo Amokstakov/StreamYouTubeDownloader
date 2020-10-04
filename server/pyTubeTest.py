@@ -84,10 +84,10 @@ class Test_Suite:
         Assert that both we can reach the url, and that the home_dir is not of NoneType, or > 5
         """
         assert _req.status_code == 200
-        self.spinner.succeed(text="Site is up!")
+        self.spinner.succeed(text="Site online -> PASS")
         self.spinner.start()
         assert len(home_dir) > 5
-        self.spinner.succeed(text="Download succeeded -> test-pytube")
+        self.spinner.succeed(text="Path Assertion -> PASS")
         self.spinner.start()
 
         a = os.path.join(home_dir, _filename) + ".mp4"
@@ -97,7 +97,7 @@ class Test_Suite:
         try:
             _youtube = pytube.YouTube(url=url)
         except:
-            self.spinner.fail(text="Test Failed -> could not reach URL")
+            self.spinner.fail(text="Could not reach URL -> FAIL\n")
             self.spinner.stop()
             exit(0)
         """for testing purposes we do not care about resolution
@@ -113,13 +113,21 @@ class Test_Suite:
             video.download(output_path=home_dir, filename=_filename)
         except:
             self.spinner.fail(
-                text="Test Failed because of video download -> Not Avaliable"
+                text="Test Failed because video download -> FAILED\n"
             )
-            self.spinner.start()
+            self.spinner.stop()
             exit(0)
-        self.spinner.succeed(text="Test Pass!")
+        if os.path.isfile(a):
+            self.spinner.succeed(text='Video Download -> PASS')
+            self.spinner.start()
+        else:
+            self.spinner.fail(text='Download Failed -> file does not exist\n')
+            self.spinner.stop()
+            exit(1)
+
         self.spinner.start()
         self.spinner.stop()
+
         print("\nTesting Finished...")
 
 
