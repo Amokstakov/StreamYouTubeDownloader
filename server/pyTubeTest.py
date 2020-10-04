@@ -108,6 +108,11 @@ class Test_Suite:
 
             parse_qs(formats[i]["signatureCipher"]) -> instead of "cipher"
         """
+        if os.path.isfile(a):
+            self.spinner.fail(text='File Exists')
+            self.spinner.stop()
+            exit(1)
+
         try:
             video = _youtube.streams.get_lowest_resolution()
             video.download(output_path=home_dir, filename=_filename)
